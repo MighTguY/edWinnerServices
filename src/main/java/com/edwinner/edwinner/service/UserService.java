@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -66,6 +67,18 @@ public class UserService {
     userInfoRepository.save(userInfo);
   }
 
+  public User getUserByEmail(String email) {
+    User user = new User();
+    Optional<UserInfo> info = userInfoRepository.findUserByEmail(email);
+    if(!info.isPresent()) {
+      return null;
+    }
+    user.setUserInfo(info.get());
+    user.setUserData(userDataRepository.findByuserId(user.getUserInfo().getId()));
+    user.setUserSubscription(userSubscriptionRepository.findByuserId(user.getUserInfo().getId()));
+    return  user;
+  }
+
   @Transactional
   public void delete(String id) {
     userInfoRepository.deleteById(Integer.parseInt(id));
@@ -95,5 +108,23 @@ public class UserService {
       users.add(user);
     });
     return users;
+  }
+
+  public boolean updatePassword(String userId, String pass) {
+    UserInfo userInfo = userInfoRepository.findById(Integer.parseInt(userId)).get();
+    userInfo.setPassword(pass);
+    userInfoRepository.save(userInfo);
+    return true;
+  }
+
+  @Transactional
+  public boolean updateRole(String userId, String role) {
+    UserInfo userInfo = userInfoRepository.findById(Integer.parseInt(userId)).get();
+    userInfo.setRole(Integer.valueOf(role));
+    userInfoRepository.save(userInfo);
+    UserData userData = userDataRepository.findByuserId(Integer.parseInt(userId));
+    userData.setRole(Integer.valueOf(role));
+    userDataRepository.save(userData);
+    return true;
   }
 }

@@ -29,10 +29,26 @@ public class UserController {
   private final AtomicLong counter = new AtomicLong();
 
   //Get user By ID
+  @GetMapping("/get/user")
+  public User getUserByEmail(@RequestParam(value = "email") String email) {
+    return userService.getUserByEmail(email);
+  }
+
   @GetMapping("/get/user/{id}")
   public User getUser(@PathVariable("id") String userId) {
     return userService.getUserById(userId);
   }
+
+  @GetMapping("/set/userPassword")
+  public boolean setPassword(@RequestParam("id") String userId, @RequestParam("pass") String pass) {
+    return userService.updatePassword(userId,pass);
+  }
+
+  @GetMapping("/set/userRole/{id}")
+  public boolean setRole(@PathVariable("id") String userId, @RequestParam("role") String role) {
+    return userService.updateRole(userId,role);
+  }
+
 
   //GET ALL USERS BY LIMIT OFFSET
   @GetMapping("/get/users")
