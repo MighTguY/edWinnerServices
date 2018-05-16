@@ -24,14 +24,14 @@ public class WordService {
     return word;
   }
 
-  public Word getWordByCheckPoint(String id) {
-    Word word = wordRepository.findTopByIdGreaterThanOrderByidAsc(Integer.parseInt(id));
+  public Word getWordByCheckPoint(String id, String role) {
+    Word word = wordRepository.findTopByIdGreaterThanOrderByidAsc(Integer.parseInt(id), Integer.parseInt(role));
     return word;
   }
 
 
-  public List<Word> getWordByLessIDlast3(String id) {
-    List<Word> words = wordRepository.findByLessId(Integer.parseInt(id));
+  public List<Word> getWordByLessIDlast3(String id, String role) {
+    List<Word> words = wordRepository.findByLessId(Integer.parseInt(id), Integer.parseInt(role));
     return words;
   }
 

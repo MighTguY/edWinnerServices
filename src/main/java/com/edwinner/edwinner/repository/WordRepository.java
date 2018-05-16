@@ -16,14 +16,14 @@ public interface WordRepository extends JpaRepository<Word, Integer> {
   List<Word> findByRole(int role);
 
   @Query(
-      value = "SELECT * FROM word t where t.id < :id limit 3",
+      value = "SELECT * FROM word t where t.id <= :id  and role = :role limit 3",
       nativeQuery=true
   )
-  List<Word> findByLessId(@Param("id") int id);
+  List<Word> findByLessId(@Param("id") int id,@Param("role") int role);
 
   @Query(
-      value = "SELECT * FROM word t where t.id > :id order by id asc limit 1",
+      value = "SELECT * FROM word t where t.id > :id and role = :role order by id asc limit 1",
       nativeQuery=true
   )
-  Word findTopByIdGreaterThanOrderByidAsc(@Param("id")  int id);
+  Word findTopByIdGreaterThanOrderByidAsc(@Param("id")  int id, @Param("role") int role);
 }

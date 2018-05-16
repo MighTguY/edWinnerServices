@@ -93,14 +93,14 @@ public class WordController {
 
   //GET revision
   @GetMapping("/get/revisionWords/{id}")
-  public List<Word> getRevisonWords(@PathVariable("id") String extraId) {
-    return wordService.getWordByLessIDlast3(extraId);
+  public List<Word> getRevisonWords(@PathVariable("id") String extraId, @RequestParam("role") String role) {
+    return wordService.getWordByLessIDlast3(extraId,role);
   }
 
 
   //GET CHECKPOINT
   @GetMapping("/get/word/checkpoint/{id}")
-  public Word getWordForCheckPoint(@PathVariable("id") String id) {
-    return wordService.getWordByCheckPoint(id);
+  public Word getWordForCheckPoint(@PathVariable("id") String id, @RequestParam("role") String role) {
+    return wordService.getWordByCheckPoint(id,role);
   }
 }
