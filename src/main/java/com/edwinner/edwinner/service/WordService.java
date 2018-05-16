@@ -90,4 +90,13 @@ public class WordService {
   public void deleteWordById(String wordId) {
     wordRepository.deleteById(Integer.parseInt(wordId));
   }
+
+  public List<Word> getLastMonthWordByLessIDlast2(String id, String role, String from) {
+    List<Word> words = wordRepository.findByMonthLessId(Integer.parseInt(id), Integer.parseInt(role),
+        Integer.parseInt(from));
+    if(words.size()==0) {
+      words = wordRepository.findByMonthLessIdDefault(Integer.parseInt(role));
+    }
+    return words;
+  }
 }

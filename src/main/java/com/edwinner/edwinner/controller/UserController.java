@@ -141,9 +141,11 @@ public class UserController {
 
   @GetMapping("/updateCheckpoint/{id}")
   public String checkPoint(@PathVariable("id") String id,
-                           @RequestParam("cpoint") String cpoint) {
+                           @RequestParam("cpoint") String cpoint,
+                           @RequestParam("mpoint") String mpoint) {
     User user = userService.getUserById(id);
     user.getUserData().setCheckPoint(Integer.parseInt(cpoint));
+    user.getUserData().setMonthlyCheckpoint(Integer.parseInt(mpoint));
     user.getUserData().setDaysLeft(user.getUserData().getDaysLeft()-1);
     userService.update(user.getUserData());
     return "success";

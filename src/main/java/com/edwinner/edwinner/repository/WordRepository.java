@@ -26,4 +26,21 @@ public interface WordRepository extends JpaRepository<Word, Integer> {
       nativeQuery=true
   )
   Word findTopByIdGreaterThanOrderByidAsc(@Param("id")  int id, @Param("role") int role);
+
+  @Query(
+      value = "SELECT * FROM word t where t.id <= :id and t.id > :from and role = :role and YEAR(created) = YEAR" +
+          "(CURRENT_DATE - " +
+          "INTERVAL 1 MONTH)\n" +
+          "AND MONTH(created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) order by id asc limit 2",
+      nativeQuery=true
+  )
+  List<Word> findByMonthLessId(@Param("id")  int id, @Param("role") int role, @Param("from") int from);
+
+  @Query(
+      value = "SELECT * FROM word t where  role = :role and YEAR(created) = YEAR(CURRENT_DATE - " +
+          "INTERVAL 1 MONTH)\n" +
+          "AND MONTH(created) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) order by id asc limit 2",
+      nativeQuery=true
+  )
+  List<Word> findByMonthLessIdDefault( @Param("role") int role);
 }

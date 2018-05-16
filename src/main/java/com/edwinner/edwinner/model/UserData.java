@@ -47,4 +47,7 @@ public class UserData {
   @Column(name="DAYS_LEFT")
   int daysLeft;
 
+  @Column(name="month_checkpoint")
+  int monthlyCheckpoint;
+
 }

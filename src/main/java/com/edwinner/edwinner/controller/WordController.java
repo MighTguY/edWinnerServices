@@ -97,6 +97,13 @@ public class WordController {
     return wordService.getWordByLessIDlast3(extraId,role);
   }
 
+  //GET revision
+  @GetMapping("/get/revisionMonthWords/{id}")
+  public List<Word> getRevisonMonthWords(@PathVariable("id") String extraId, @RequestParam("role") String role, @RequestParam
+      (value= "from", defaultValue = "0") String from) {
+    return wordService.getLastMonthWordByLessIDlast2(extraId,role,from);
+  }
+
 
   //GET CHECKPOINT
   @GetMapping("/get/word/checkpoint/{id}")
